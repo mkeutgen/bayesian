@@ -5,7 +5,7 @@ author: "Maxime Keutgen"
 ---
 ## Introduction
 
-This is an R notebook about Bayesian Inference. Let's start with an example. We are conducting a study on heart strokes. Historical studies show complication SICH. We want to estimate risk for SICH in ECASS 3. We have prior informations from two studies : ECASS 1 and ECASS 2, ECASS 2 says proportion of patients with SICH is $ 8/100 $.
+This is an R notebook about Bayesian Inference. Let's start with an example. We are conducting a study on heart strokes. Historical studies show complication SICH. We want to estimate risk for SICH in ECASS 3. We have prior informations from two studies : ECASS 1 and ECASS 2, ECASS 2 says proportion of patients with SICH is $8/100$.
 
 The first preliminary results, in ECASS 3, tell us that out of 50 patients with strokes, 10 are affected by the SICH complication.
 
@@ -51,27 +51,28 @@ In the Bayesian approach, we _use_ prior information. We start by :
 ### Specifying the prior distribution
 Okay kids, let's start with the likelihood function we've shown earlier :
 $$ L(\theta|y_0) = {n_0\choose y_0} \theta^{y_0} (1-\theta)^{n_0-y_0} $$
-Altough this function does provide valuable information about the likelihood of a parameter theta having  _prior_ belief theta (because y_0 and n_0 can be from a prior study), this likelihood function is obviously not a pdf. Indeed, its integral from -Inf to +Inf is not equal to 1.
+Although this function does provide valuable information about the likelihood of a parameter theta having  _prior_ belief theta (because y_0 and n_0 can be from a prior study), this likelihood function is obviously not a pdf. Indeed, its integral from -Inf to +Inf is not equal to 1.
 
-However, if we remind ourselves of the second Likelihood Principle :
-
+Because of the second likelihood principle :
 " _Two likelihood functions for θ contain the same information about θ if they
 are proportional to each other_ "
+We basically just have to standardize this likelihood function. This standardization can be done numerically or analytically.
 
+In the specific case of a binomial likelihood function, this is proportional to a beta density $Beta(\alpha,\beta)$ :
 
+$$ p(\theta) = \frac{1}{B(\alpha_0,\beta_0)} \theta^{\alpha_0-1} (1-\theta)^{\beta_0-1} $$
+With $\alpha_0 = 9$ and  $\beta_0 = 100 - 8 + 1$.
+
+Bayes Theorem is : 
+
+$$ p(\theta|\pmb{y}) = \frac{L(\theta|\pmb{y})p(\theta)}{p(\pmb{y})}  $$
+In this case, the posterior probability is the likelihood $L(\theta|\pmb{y})$ multiplied by prior theta divided by the averaged likelihood.
+
+This all leads to :
+$$ p(\theta|y) = \frac{1}{B(\bar{\alpha}\bar{\beta)}} \theta^{\bar{\alpha}-1}(1-\theta)^{\bar{\beta}-1} $$
+!["prior likelihhod and posterior, all rights belong to Pr. C Faes (UHasselt)"](priorlikelihoodposterior.png)
 
 
 ```{r}
 
 ```
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
-```{r}
-
-```
-
