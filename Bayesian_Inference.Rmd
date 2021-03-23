@@ -1,6 +1,6 @@
 ---
 title: "Bayesian Inference"
-output: html_notebook
+output: rmarkdown::github_document
 author: "Maxime Keutgen"
 ---
 ## Introduction
